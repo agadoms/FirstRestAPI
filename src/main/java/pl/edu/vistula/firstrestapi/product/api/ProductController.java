@@ -1,11 +1,9 @@
 package pl.edu.vistula.firstrestapi.product.api;
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.edu.vistula.firstrestapi.product.api.request.ProductRequest;
 import pl.edu.vistula.firstrestapi.product.api.response.ProductResponse;
 import pl.edu.vistula.firstrestapi.product.service.ProductService;
@@ -23,5 +21,13 @@ public class ProductController {
     {
         ProductResponse productResponse = productService.create(productRequest);
         return new ResponseEntity<>(productResponse, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{id}")
+    @Operation(summary = "Find product by ID")
+    public ResponseEntity<ProductResponse> find(@PathVariable Long id)
+    {
+        ProductResponse productResponse = productService.find(id);
+        return ResponseEntity.status(HttpStatus.OK).body(productResponse);
     }
 }
